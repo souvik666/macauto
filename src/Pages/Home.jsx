@@ -4,7 +4,10 @@ import styled from "styled-components";
 import { Chart } from "../components/Chart";
 import SearchAppBar from "../components/Navbar";
 import { getPinnedRepo } from "../Helper/Helper";
-
+const openInNewTab = (url) => {
+  const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+  if (newWindow) newWindow.opener = null;
+};
 const StyledDiv = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -82,7 +85,7 @@ export default function Main() {
           {chartdata ? (
             <Chart dataset={chartdata}></Chart>
           ) : (
-            <img alt ="dragon" src="pixeldragon.jpg"></img>
+            <img alt="dragon" src="pixeldragon.jpg"></img>
           )}
         </Charbox>
         <InfoBox>
@@ -107,7 +110,7 @@ export default function Main() {
                   label={protmp[protmp.length - 1]}
                   color="warning"
                   onClick={(e) => {
-                    window.location.href = el;
+                    openInNewTab(el);
                   }}
                 ></Chip>
               </>
@@ -133,7 +136,7 @@ export default function Main() {
                   label={protmp[protmp.length - 1]}
                   color="warning"
                   onClick={(e) => {
-                    window.open = el;
+                    openInNewTab(el);
                   }}
                 ></Chip>
               </>
