@@ -82,6 +82,7 @@ export default function SearchAppBar(props) {
               onKeyUp={(e) => {
                 if (e.key === "Enter") {
                   GrabInput(e.target.value);
+                  return (e.target.value = "");
                 }
               }}
             />
