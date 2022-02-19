@@ -112,7 +112,7 @@ export default function Main() {
           {chartdata ? (
             <Chart dataset={chartdata}></Chart>
           ) : (
-            <img alt="dragon" src="pixeldragon.jpg"></img>
+            <img width={"100%"} alt="dragon" src="pixeldragon.jpg"></img>
           )}
         </Charbox>
         <InfoBox>
@@ -131,7 +131,9 @@ export default function Main() {
             ""
           )}
           {nodesArray.length && !pass ? (
-            <Alert style={{ marginTop: "3%" }} severity="warning">Repos Which are not Deployed yet</Alert>
+            <Alert style={{ marginTop: "3%" }} severity="warning">
+              Repos Which are not Deployed yet
+            </Alert>
           ) : (
             ""
             /*  <h1>
