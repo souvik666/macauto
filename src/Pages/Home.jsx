@@ -52,9 +52,6 @@ export default function Main() {
     setflag(true);
     getPinnedRepo(value)
       .then((d) => {
-        //console.log(d);
-        //setValue(d);
-
         const description = d.description;
         const deployment = d.deployment;
         const no_description_repos = d.no_description_repos.length || 100;
@@ -77,19 +74,9 @@ export default function Main() {
                 "#63ff7d",
                 "rgba(54, 162, 235, 1)",
                 "rgba(255, 206, 86, 1)",
-                /*                 "rgba(75, 192, 192, 0.2)",
-                "rgba(153, 102, 255, 0.2)",
-                "rgba(255, 159, 64, 0.2)", */
               ],
-              borderColor: [
-                "#5e6df530",
-                "#36a3eb52",
-                "#ffcf5626",
-                /* "rgba(75, 192, 192, 1)",
-                "rgba(153, 102, 255, 1)",
-                "rgba(255, 159, 64, 1)", */
-              ],
-              borderWidth: 1,
+              borderColor: ["#5e6df530", "#36a3eb52", "#ffcf5626"],
+              borderWidth: 3,
             },
           ],
         });
