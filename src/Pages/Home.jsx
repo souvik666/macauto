@@ -1,9 +1,12 @@
-import { Chip } from "@mui/material";
+import { Alert, Chip } from "@mui/material";
 import { useState } from "react";
 import styled from "styled-components";
 import { Chart } from "../components/Chart";
 import SearchAppBar from "../components/Navbar";
+import { device } from "../Device";
 import { getPinnedRepo } from "../Helper/Helper";
+import LinearProgress from "@mui/material/LinearProgress";
+
 const openInNewTab = (url) => {
   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
   if (newWindow) newWindow.opener = null;
@@ -13,31 +16,53 @@ const StyledDiv = styled.div`
   grid-template-columns: repeat(2, 1fr);
   width: 95%;
   margin: auto;
+  @media ${device.mobileS} {
+    grid-template-columns: 1fr;
+  }
+  @media ${device.mobileM} {
+    grid-template-columns: 1fr;
+  }
+  @media ${device.mobileL} {
+    grid-template-columns: 1fr;
+  }
+  @media ${device.tablet} {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 const Charbox = styled.div`
   width: 70%;
+  margin: auto;
 `;
-const InfoBox = styled.div``;
+const InfoBox = styled.div`
+  width: 80%;
+  margin: auto;
+`;
 export default function Main() {
   // const [dvalue, setValue] = useState();
 
+  const [visit, setvisit] = useState();
   const [chartdata, setchartdata] = useState();
   const [nodesArray, setnodesArr] = useState([]);
   const [nodescriptionArray, setnodescriptionArray] = useState([]);
+  const [pass, setPass] = useState();
+  const [flag, setflag] = useState();
   function GrabInput(value) {
+    setvisit(true);
+    setflag(true);
     getPinnedRepo(value)
       .then((d) => {
         //console.log(d);
         //setValue(d);
+
         const description = d.description;
         const deployment = d.deployment;
         const no_description_repos = d.no_description_repos.length || 100;
         const no_deploymnet_Link_repos = d.no_deploymnet_Link_repos;
+        const pass_status = d.pass;
+        setPass(pass_status);
         setnodesArr(no_deploymnet_Link_repos);
         setnodescriptionArray(d.no_description_repos);
-        //console.log(nodesArray);
-        //console.log(description, deployment, no_description_repos);
         setchartdata({
           labels: [
             "Repo with description",
@@ -68,9 +93,10 @@ export default function Main() {
             },
           ],
         });
+        return setflag(false);
       })
       .catch((e) => {
-        console.log(e);
+        return console.log(e);
       });
     // console.log(dvalue.description);
   }
@@ -79,6 +105,7 @@ export default function Main() {
     <>
       {" "}
       <SearchAppBar GrabInput={GrabInput}></SearchAppBar>
+      {flag ? <LinearProgress color="secondary" /> : ""}
       <br />
       <StyledDiv>
         <Charbox>
@@ -89,13 +116,28 @@ export default function Main() {
           )}
         </Charbox>
         <InfoBox>
-          {nodesArray.length ? (
-            <h1>Repos Which are not Deployed yet</h1>
-          ) : (
+          {!visit ? (
             <h1>
+              {" "}
+              Hey Please Enter Your Github UserName On the search bar and click
+              enter{" "}
+            </h1>
+          ) : (
+            ""
+          )}
+          {pass ? (
+            <Alert severity="success">Awsome work! Good to go!</Alert>
+          ) : (
+            ""
+          )}
+          {nodesArray.length && !pass ? (
+            <Alert style={{ marginTop: "3%" }} severity="warning">Repos Which are not Deployed yet</Alert>
+          ) : (
+            ""
+            /*  <h1>
               Please Enter Your Github User name on Searh Bar & click enter to
               Evaluate
-            </h1>
+            </h1> */
           )}
 
           {nodesArray.map((el, i) => {
@@ -108,7 +150,7 @@ export default function Main() {
                   style={{ marginTop: "2%", marginRight: "2%" }}
                   id={i}
                   label={protmp[protmp.length - 1]}
-                  color="warning"
+                  color="success"
                   onClick={(e) => {
                     openInNewTab(el);
                   }}
@@ -118,7 +160,9 @@ export default function Main() {
           })}
 
           {nodescriptionArray.length ? (
-            <h1>Repos Which are not Descriptive</h1>
+            <Alert style={{ marginTop: "3%" }} severity="warning">
+              Repos Which are not Descriptive
+            </Alert>
           ) : (
             ""
           )}
@@ -134,7 +178,7 @@ export default function Main() {
                   style={{ marginTop: "2%", marginRight: "2%" }}
                   id={i}
                   label={protmp[protmp.length - 1]}
-                  color="warning"
+                  color="success"
                   onClick={(e) => {
                     openInNewTab(el);
                   }}

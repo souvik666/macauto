@@ -38,7 +38,7 @@ const PinnedRepoWatchDog = (arr) => {
       link,
       description,
       image,
-     /*  language,
+      /*  language,
       languageColor,
       stars,
       forks, */
@@ -60,11 +60,15 @@ const PinnedRepoWatchDog = (arr) => {
 
   const [res, res2] = [workdoneDE || 100, DES || 100];
   return {
-    description: res2 ,
-    deployment: res ,
+    description: res2,
+    deployment: res,
     no_deploymnet_Link_repos: obj.NoDeployment,
     no_description_repos: obj.NoGithubdesprition,
     no_ReadME_repo: obj.noReadME,
+    pass:
+      !obj.noReadME.length &&
+      !obj.NoDeployment.length &&
+      !obj.NoGithubdesprition.length,
   };
 };
 
