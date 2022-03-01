@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Chart } from "../components/Chart";
 import SearchAppBar from "../components/Navbar";
 import { device } from "../Device";
-import { getPinnedRepo } from "../Helper/Helper";
+import { getPinnedRepo, percentage } from "../Helper/Helper";
 import LinearProgress from "@mui/material/LinearProgress";
 
 const openInNewTab = (url) => {
@@ -39,47 +39,85 @@ const InfoBox = styled.div`
   margin: auto;
 `;
 export default function Main() {
-  // const [dvalue, setValue] = useState();
-
-  const [visit, setvisit] = useState();
+  window.localStorage.clear();
+  /* const [dvalue, setValue] = useState([]);
+  const [repocount, setrepocount] = useState(); */
+  const [visit, setvisit] = useState(false);
   const [chartdata, setchartdata] = useState();
   const [nodesArray, setnodesArr] = useState([]);
   const [nodescriptionArray, setnodescriptionArray] = useState([]);
+  // const [noReadME, setNoReadME] = useState([]);
   const [pass, setPass] = useState();
   const [flag, setflag] = useState();
+  //console.log(visit)
+  // const [t, sett] = useState();
+  const [red, setred] = useState();
+  const [see, setsee] = useState();
   function GrabInput(value) {
     setvisit(true);
     setflag(true);
     getPinnedRepo(value)
       .then((d) => {
-        const description = d.description;
+        // setValue(d);
+        //setrepocount(d.repocount);
+        // const description = d.description;
         const deployment = d.deployment;
-        const no_description_repos = d.no_description_repos.length || 100;
+        //const no_description_repos = d.no_description_repos.length;
         const no_deploymnet_Link_repos = d.no_deploymnet_Link_repos;
         const pass_status = d.pass;
+        //const NoReadME = d.no_ReadME_repo;
+
         setPass(pass_status);
+        //  setNoReadME(NoReadME);
         setnodesArr(no_deploymnet_Link_repos);
         setnodescriptionArray(d.no_description_repos);
-        setchartdata({
-          labels: [
-            "Repo with description",
-            "deployment done",
-            "no_description_repos",
-          ],
-          datasets: [
-            {
-              label: "Work Done By you in percentage",
-              data: [description, deployment, no_description_repos],
-              backgroundColor: [
-                "#63ff7d",
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 206, 86, 1)",
-              ],
-              borderColor: ["#5e6df530", "#36a3eb52", "#ffcf5626"],
-              borderWidth: 3,
-            },
-          ],
-        });
+
+        /* console.log(window.localStorage.getItem("ReadMe")); */
+
+        setTimeout(function () {
+          let tmp = JSON.parse(window.localStorage.getItem("ReadME"));
+          if (tmp) {
+            if (tmp.length === 0) setsee(false);
+            else setsee(true);
+            if (percentage(d.d.length - tmp.length, d.d.length) | 0) {
+              setred(percentage(d.d.length - tmp.length, d.d.length) | 0);
+              if (percentage(d.d.length - tmp.length, d.d.length) < 99) {
+                setPass(false);
+              }
+            }
+          }
+          // console.log(d.d.length);
+          setred(percentage(d.d.length - tmp.length, d.d.length) | 0);
+          //  sett(true);
+          setchartdata({
+            labels: [
+              "Repos With ReadME",
+              "deployment done",
+              "Repo with_description_repos",
+            ],
+            datasets: [
+              {
+                label: "Work Done By you in percentage",
+                data: [
+                  percentage(d.d.length - tmp.length, d.d.length) | 0,
+                  deployment,
+                  percentage(
+                    d.d.length - d.no_description_repos.length,
+                    d.d.length
+                  ) | 0,
+                ],
+                backgroundColor: [
+                  "#63ff7d",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                ],
+                borderColor: ["#5e6df530", "#36a3eb52", "#ffcf5626"],
+                borderWidth: 3,
+              },
+            ],
+          });
+        }, 1000);
+        //console.log(noReadME);
         return setflag(false);
       })
       .catch((e) => {
@@ -87,16 +125,28 @@ export default function Main() {
       });
     // console.log(dvalue.description);
   }
+  function eventme(value) {
+    return setTimeout(function () {
+      /* let noReadme = JSON.parse(window.localStorage.getItem("ReadME")) || [];
+      setNoReadME(noReadme); */
+      GrabInput(value);
+      /*  if (noReadME.length > 0) {
+        console.log(percentage(repocount - noReadME.length, repocount));
+        console.log(repocount, noReadME.length);
+      } */
+    }, 1000);
+  }
 
   return (
     <>
-      {" "}
-      <SearchAppBar GrabInput={GrabInput}></SearchAppBar>
+      {/* {t ? <p>Hi</p> : ""} */}
+      {/*       {red ? <p>Hi</p> : <h1>Hi</h1>}{" "} */}
+      <SearchAppBar GrabInput={eventme}></SearchAppBar>
       {flag ? <LinearProgress color="secondary" /> : ""}
       <br />
       <StyledDiv>
         <Charbox>
-          {chartdata ? (
+          {chartdata && red ? (
             <Chart dataset={chartdata}></Chart>
           ) : (
             <img width={"100%"} alt="dragon" src="pixeldragon.jpg"></img>
@@ -117,6 +167,15 @@ export default function Main() {
           ) : (
             ""
           )}
+
+          {/* {noReadME.length ? (
+            <Alert style={{ marginTop: "3%" }} severity="warning">
+              Repos without README
+            </Alert>
+          ) : (
+            ""
+          )} */}
+
           {nodesArray.length && !pass ? (
             <Alert style={{ marginTop: "3%" }} severity="warning">
               Repos Which are not Deployed yet
@@ -137,7 +196,7 @@ export default function Main() {
               <>
                 <Chip
                   style={{ marginTop: "2%", marginRight: "2%" }}
-                  id={i}
+                  key={i}
                   label={protmp[protmp.length - 1]}
                   color="success"
                   onClick={(e) => {
@@ -175,6 +234,16 @@ export default function Main() {
               </>
             );
           })}
+          {
+            /* document.getElementById("noredme") !== null */ see && !pass ? (
+              <Alert style={{ marginTop: "3%" }} severity="warning">
+                Repos Without ReadME
+              </Alert>
+            ) : (
+              ""
+            )
+          }
+          <div id="noredme"></div>
         </InfoBox>
       </StyledDiv>
     </>
