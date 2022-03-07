@@ -18,6 +18,7 @@ const StyledDiv = styled.div`
   grid-template-columns: repeat(2, 1fr);
   width: 95%;
   margin: auto;
+  gap: 1%;
   @media ${device.mobileS} {
     grid-template-columns: 1fr;
   }
@@ -39,15 +40,14 @@ const MyFooter = styled.footer`
   margin-top: 2%;
   line-height: 4;
    */
-  position: relative;
-  bottom: -10;
+  position: fixed;
+  bottom: 0;
   width: 100%;
   height: 60px; /* Height of the footer */
   background: #6cf;
   line-height: 4;
   background-color: black;
   color: white;
-  margin-top: 13%;
   text-align: center;
 `;
 const Charbox = styled.div`
@@ -61,6 +61,7 @@ const InfoBox = styled.div`
 
 const Normcont = styled.div`
   height: 100%;
+  margin-bottom: 25%;
 `;
 export default function Main() {
   window.localStorage.clear();
@@ -72,8 +73,9 @@ export default function Main() {
   const [nodesArray, setnodesArr] = useState([]);
   const [nodescriptionArray, setnodescriptionArray] = useState([]);
   // const [noReadME, setNoReadME] = useState([]);
-  const [pass, setPass] = useState();
+  const [pass, setPass] = useState(false);
   const [flag, setflag] = useState();
+  const [infopass, setinfopass] = useState();
   //console.log(visit)
   // const [t, sett] = useState();
   const [userdata, setUserdata] = useState({
@@ -95,14 +97,14 @@ export default function Main() {
         let data = d.data;
         let status = d.status;
         if (
-          !data.email ||
-          !data.blog ||
-          !data.twitter_username ||
-          !data.bio ||
-          !data.location ||
-          !data.avatar_url
+          data.email &&
+          data.blog &&
+          data.twitter_username &&
+          data.bio &&
+          data.location &&
+          data.avatar_url
         ) {
-          setPass(false);
+          setinfopass(true);
         }
         setUserdata({
           email: data.email,
@@ -120,21 +122,14 @@ export default function Main() {
     setflag(true);
     getPinnedRepo(value)
       .then((d) => {
-        // setValue(d);
-        //setrepocount(d.repocount);
-        // const description = d.description;
         const deployment = d.deployment;
-        //const no_description_repos = d.no_description_repos.length;
+
         const no_deploymnet_Link_repos = d.no_deploymnet_Link_repos;
         const pass_status = d.pass;
-        //const NoReadME = d.no_ReadME_repo;
 
         setPass(pass_status);
-        //  setNoReadME(NoReadME);
         setnodesArr(no_deploymnet_Link_repos);
         setnodescriptionArray(d.no_description_repos);
-
-        /* console.log(window.localStorage.getItem("ReadMe")); */
 
         setTimeout(function () {
           let tmp = JSON.parse(window.localStorage.getItem("ReadME"));
@@ -148,9 +143,8 @@ export default function Main() {
               }
             }
           }
-          // console.log(d.d.length);
+
           setred(percentage(d.d.length - tmp.length, d.d.length) | 0);
-          //  sett(true);
           setchartdata({
             labels: [
               "Repos With ReadME",
@@ -179,154 +173,135 @@ export default function Main() {
             ],
           });
         }, 1000);
-        //console.log(noReadME);
 
         return setflag(false);
       })
       .catch((e) => {
         return console.log(e);
       });
-    // console.log(dvalue.description);
   }
   function eventme(value) {
     return setTimeout(function () {
-      /* let noReadme = JSON.parse(window.localStorage.getItem("ReadME")) || [];
-      setNoReadME(noReadme); */
       GrabInput(value);
-
-      /*  if (noReadME.length > 0) {
-        console.log(percentage(repocount - noReadME.length, repocount));
-        console.log(repocount, noReadME.length);
-      } */
+      console.log(userdata);
     }, 1000);
   }
 
   return (
-    <Normcont>
-      {/* {t ? <p>Hi</p> : ""} */}
-      {/*       {red ? <p>Hi</p> : <h1>Hi</h1>}{" "} */}
-      <SearchAppBar GrabInput={eventme}></SearchAppBar>
-      {flag ? <LinearProgress color="success" /> : ""}
+    <>
+     
+      <Normcont>
+        <SearchAppBar GrabInput={eventme}></SearchAppBar>
+        {flag ? <LinearProgress color="success" /> : ""}
 
-      <br />
-      <StyledDiv>
-        <Charbox>
-          {chartdata && red ? (
-            <Chart dataset={chartdata}></Chart>
-          ) : (
-            <img width={"100%"} alt="dragon" src="pixeldragon.jpg"></img>
-          )}
-        </Charbox>
-        <InfoBox>
-          {!visit ? (
-            <h1>
-              {" "}
-              Hey Please Enter Your Github UserName On the search bar and click
-              enter{" "}
-            </h1>
-          ) : (
-            ""
-          )}
-          {pass ? (
-            <Alert severity="success">Awsome work! Good to go!</Alert>
-          ) : (
-            ""
-          )}
+        <br />
+        <StyledDiv>
+          <Charbox>
+            {chartdata && red ? (
+              <Chart dataset={chartdata}></Chart>
+            ) : (
+              <img width={"100%"} alt="dragon" src="pixeldragon.jpg"></img>
+            )}
+          </Charbox>
+          <InfoBox>
+            {!visit ? (
+              <h1>
+                {" "}
+                Hey Please Enter Your Github UserName On the search bar and
+                click enter{" "}
+              </h1>
+            ) : (
+              ""
+            )}
+            {pass && infopass ? (
+              <Alert severity="success">Awsome work! Good to go!</Alert>
+            ) : (
+              ""
+            )}
 
-          {/* {noReadME.length ? (
-            <Alert style={{ marginTop: "3%" }} severity="warning">
-              Repos without README
-            </Alert>
-          ) : (
-            ""
-          )} */}
+            {chartdata && red ? (
+              <OutlinedCard
+                name={userdata.name}
+                bio={userdata.bio}
+                blog={userdata.portfoliourl}
+                twitter_username={userdata.twitter_username}
+                location={userdata.location}
+                img={userdata.img}
+              />
+            ) : (
+              ""
+            )}
 
-          {chartdata && red ? (
-            <OutlinedCard
-              name={userdata.name}
-              bio={userdata.bio}
-              blog={userdata.portfoliourl}
-              twitter_username={userdata.twitter_username}
-              location={userdata.location}
-              img={userdata.img}
-            />
-          ) : (
-            ""
-          )}
-
-          {nodesArray.length && !pass ? (
-            <Alert style={{ marginTop: "3%" }} severity="warning">
-              Repos Which are not Deployed yet
-            </Alert>
-          ) : (
-            ""
-            /*  <h1>
-              Please Enter Your Github User name on Searh Bar & click enter to
-              Evaluate
-            </h1> */
-          )}
-
-          {nodesArray.map((el, i) => {
-            let tmp = el.split("//");
-            let protmp = tmp[1].split("/");
-            //console.log(protmp[protmp.length - 1], el);
-            return (
-              <>
-                <Chip
-                  style={{ marginTop: "2%", marginRight: "2%" }}
-                  key={i}
-                  label={protmp[protmp.length - 1]}
-                  color="success"
-                  onClick={(e) => {
-                    openInNewTab(el);
-                  }}
-                ></Chip>
-              </>
-            );
-          })}
-
-          {nodescriptionArray.length ? (
-            <Alert style={{ marginTop: "3%" }} severity="warning">
-              Repos Which are not Descriptive
-            </Alert>
-          ) : (
-            ""
-          )}
-
-          {nodescriptionArray.map((el, i) => {
-            let tmp = el.split("//");
-            let protmp = tmp[1].split("/");
-            //console.log(protmp[protmp.length - 1], el);
-            return (
-              <>
-                <Chip
-                  key={i}
-                  style={{ marginTop: "2%", marginRight: "2%" }}
-                  id={i}
-                  label={protmp[protmp.length - 1]}
-                  color="success"
-                  onClick={(e) => {
-                    openInNewTab(el);
-                  }}
-                ></Chip>
-              </>
-            );
-          })}
-          {
-            /* document.getElementById("noredme") !== null */ see && !pass ? (
+            {nodesArray.length && !pass ? (
               <Alert style={{ marginTop: "3%" }} severity="warning">
-                Repos Without ReadME
+                Repos Which are not Deployed yet
               </Alert>
             ) : (
               ""
-            )
-          }
-          <div id="noredme"></div>
-        </InfoBox>
-      </StyledDiv>
+            )}
+
+            {nodesArray.map((el, i) => {
+              let tmp = el.split("//");
+              let protmp = tmp[1].split("/");
+
+              return (
+                <>
+                  <Chip
+                    style={{ marginTop: "2%", marginRight: "2%" }}
+                    key={i}
+                    label={protmp[protmp.length - 1]}
+                    color="success"
+                    onClick={(e) => {
+                      openInNewTab(el);
+                    }}
+                  ></Chip>
+                </>
+              );
+            })}
+
+            {nodescriptionArray.length ? (
+              <Alert style={{ marginTop: "3%" }} severity="warning">
+                Repos Which are not Descriptive
+              </Alert>
+            ) : (
+              ""
+            )}
+
+            {nodescriptionArray.map((el, i) => {
+              let tmp = el.split("//");
+              let protmp = tmp[1].split("/");
+
+              return (
+                <>
+                  <Chip
+                    key={i}
+                    style={{ marginTop: "2%", marginRight: "2%" }}
+                    id={i}
+                    label={protmp[protmp.length - 1]}
+                    color="success"
+                    onClick={(e) => {
+                      openInNewTab(el);
+                    }}
+                  ></Chip>
+                </>
+              );
+            })}
+            {
+              /* document.getElementById("noredme") !== null */ see && !pass ? (
+                <Alert style={{ marginTop: "3%" }} severity="warning">
+                  Repos Without ReadME
+                </Alert>
+              ) : (
+                ""
+              )
+            }
+            <div id="noredme"></div>
+          </InfoBox>
+        </StyledDiv>
+      </Normcont>
       <MyFooter>
         Made With ❤️ By <a href="https://github.com/souvik666">Souvik</a>{" "}
       </MyFooter>
-    </Normcont>
+    </>
   );
 }
