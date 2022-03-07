@@ -31,7 +31,25 @@ const StyledDiv = styled.div`
     grid-template-columns: 1fr 1fr;
   }
 `;
-
+const MyFooter = styled.footer`
+  /*   height: 60px;
+  text-align: center;
+  background-color: black;
+  color: white;
+  margin-top: 2%;
+  line-height: 4;
+   */
+  position: relative;
+  bottom: -10;
+  width: 100%;
+  height: 60px; /* Height of the footer */
+  background: #6cf;
+  line-height: 4;
+  background-color: black;
+  color: white;
+  margin-top: 13%;
+  text-align: center;
+`;
 const Charbox = styled.div`
   width: 70%;
   margin: auto;
@@ -39,6 +57,10 @@ const Charbox = styled.div`
 const InfoBox = styled.div`
   width: 80%;
   margin: auto;
+`;
+
+const Normcont = styled.div`
+  height: 100%;
 `;
 export default function Main() {
   window.localStorage.clear();
@@ -180,7 +202,7 @@ export default function Main() {
   }
 
   return (
-    <>
+    <Normcont>
       {/* {t ? <p>Hi</p> : ""} */}
       {/*       {red ? <p>Hi</p> : <h1>Hi</h1>}{" "} */}
       <SearchAppBar GrabInput={eventme}></SearchAppBar>
@@ -302,6 +324,9 @@ export default function Main() {
           <div id="noredme"></div>
         </InfoBox>
       </StyledDiv>
-    </>
+      <MyFooter>
+        Made With ❤️ By <a href="https://github.com/souvik666">Souvik</a>{" "}
+      </MyFooter>
+    </Normcont>
   );
 }
