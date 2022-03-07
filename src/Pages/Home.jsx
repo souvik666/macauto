@@ -79,7 +79,6 @@ export default function Main() {
   //console.log(visit)
   // const [t, sett] = useState();
   const [userdata, setUserdata] = useState({
-    email: "",
     portfoliourl: "",
     twitter_username: "",
     bio: "",
@@ -97,7 +96,6 @@ export default function Main() {
         let data = d.data;
         let status = d.status;
         if (
-          data.email &&
           data.blog &&
           data.twitter_username &&
           data.bio &&
@@ -107,7 +105,6 @@ export default function Main() {
           setinfopass(true);
         }
         setUserdata({
-          email: data.email,
           portfoliourl: data.blog,
           twitter_username: data.twitter_username,
           bio: data.bio,
@@ -189,7 +186,6 @@ export default function Main() {
 
   return (
     <>
-     
       <Normcont>
         <SearchAppBar GrabInput={eventme}></SearchAppBar>
         {flag ? <LinearProgress color="success" /> : ""}
@@ -214,7 +210,7 @@ export default function Main() {
               ""
             )}
             {pass && infopass ? (
-              <Alert severity="success">Awsome work! Good to go!</Alert>
+              <Alert severity="success" style={{ marginBottom: "3%" }}>Awsome work! Good to go!</Alert>
             ) : (
               ""
             )}

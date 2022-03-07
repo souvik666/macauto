@@ -34,14 +34,14 @@ function HandelMe(data, whatnotfound) {
 }
 
 export default function OutlinedCard(props) {
-  const { name, email, blog, bio, twitter_username, location, img } = props;
+  const { name, blog, bio, twitter_username, location, img } = props;
   return (
     <React.Fragment>
-       {name && email && blog && bio && twitter_username && location && img ? (
+       {/* {name  && blog && bio && twitter_username && location && img ? (
         <h1>Hi</h1>
       ) : (
         ""
-      )}
+      )} */}
       <Box sx={{ minWidth: 275 }}>
         <Card variant="outlined">
           <CardContent>
@@ -74,7 +74,7 @@ export default function OutlinedCard(props) {
               {HandelMe(bio, "bio")}
               <br />
               <small>
-                {HandelMe(email, "email")}
+               
                 {/*  //{email || <Alert severity="error">No Email Found</Alert>}{" "} */}
               </small>
             </Typography>
