@@ -196,7 +196,11 @@ export default function Main() {
             {chartdata && red ? (
               <Chart dataset={chartdata}></Chart>
             ) : (
-              <img width={"100%"} alt="dragon" src="pixeldragon.jpg"></img>
+              <img
+                width={"100%"}
+                alt="full stack souvik dutta"
+                src="octocat.gif"
+              ></img>
             )}
           </Charbox>
           <InfoBox>
@@ -210,7 +214,9 @@ export default function Main() {
               ""
             )}
             {pass && infopass ? (
-              <Alert severity="success" style={{ marginBottom: "3%" }}>Awsome work! Good to go!</Alert>
+              <Alert severity="success" style={{ marginBottom: "3%" }}>
+                Awsome work! Good to go!
+              </Alert>
             ) : (
               ""
             )}
