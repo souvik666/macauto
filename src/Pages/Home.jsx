@@ -97,7 +97,7 @@ export default function Main() {
         .then((d) => {
           let data = d.data;
           let status = d.status;
-          console.log(data);
+          // console.log(data);
 
           if (
             data.blog &&

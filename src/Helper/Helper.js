@@ -18,6 +18,14 @@ function extractPhone(text) {
   }
 }
 
+function checker(str) {
+  return (
+    str.split(".").includes("vercel") ||
+    str.split(".").includes("netlify") ||
+    str.split(".").includes("heroku")
+  );
+}
+
 function extractSocialMedia(text) {
   var urlRegex = /(https?:\/\/[^ ]*)/;
   return text.match(urlRegex).length !== 0;
@@ -62,10 +70,20 @@ const PinnedRepoWatchDog = (arr) => {
     //if (!getProfileReadme(repo, owner)) obj.noReadME.push(link);
     if (website === undefined) {
       obj.NoDeployment.push(link);
+    } else {
+      if (!checker(website)) {
+        console.log(website);
+        obj.NoDeployment.push(link);
+      }
     }
     if (description === undefined) {
       obj.NoGithubdesprition.push(link);
+    } else {
+      if (description.length < 30) {
+        obj.NoGithubdesprition.push(link);
+      }
     }
+
     if (!image) {
       obj.noimg = true;
     }
