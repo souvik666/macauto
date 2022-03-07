@@ -70,7 +70,8 @@ const PinnedRepoWatchDog = (arr) => {
     //if (!getProfileReadme(repo, owner)) obj.noReadME.push(link);
     if (website === undefined) {
       obj.NoDeployment.push(link);
-    } else {
+    } else if (website) {
+      console.log(website);
       if (!checker(website)) {
         console.log(website);
         obj.NoDeployment.push(link);
@@ -79,7 +80,7 @@ const PinnedRepoWatchDog = (arr) => {
     if (description === undefined) {
       obj.NoGithubdesprition.push(link);
     } else {
-      if (description.length < 30) {
+      if (description.length <= 90) {
         obj.NoGithubdesprition.push(link);
       }
     }
