@@ -252,8 +252,8 @@ export default function Main() {
 
             {nodesArray.length && !pass ? (
               <Alert style={{ marginTop: "3%" }} severity="warning">
-                Repos Which are not Deployed yet (forked repos and profile redme are not
-                considerd)
+                Repos Which are not Deployed yet (forked repos and profile redme
+                are not considerd)
               </Alert>
             ) : (
               ""
@@ -308,7 +308,7 @@ export default function Main() {
             {
               /* document.getElementById("noredme") !== null */ see && !pass ? (
                 <Alert style={{ marginTop: "3%" }} severity="warning">
-                  Repos Without ReadME
+                  Repos Without ReadME (min word count 300)
                 </Alert>
               ) : (
                 ""
