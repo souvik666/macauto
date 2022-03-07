@@ -72,13 +72,7 @@ export default function OutlinedCard(props) {
             <Typography sx={{ mb: 1.5, mt: 1.5 }} color="text.secondary">
               {HandelMe(twitter_username, "twitter_username")}{" "}
             </Typography>
-            <Typography variant="body2">
-              {HandelMe(bio, "bio")}
-              <br />
-              <small>
-                {/*  //{email || <Alert severity="error">No Email Found</Alert>}{" "} */}
-              </small>
-            </Typography>
+            <Typography variant="body2">{HandelMe(bio, "bio")}</Typography>
           </CardContent>
           <CardActions>
             <Button size="small">{LinkME(blog)}</Button>
