@@ -97,7 +97,7 @@ export default function Main() {
         .then((d) => {
           let data = d.data;
           let status = d.status;
-          console.log(status);
+          console.log(data);
 
           if (
             data.blog &&
@@ -317,7 +317,7 @@ export default function Main() {
         </StyledDiv>
       </Normcont>
       <MyFooter>
-        Made With ❤️ By <a href="https://github.com/souvik666">Souvik</a>{" "}
+        Made With ❤️ By <a href="https://github.com/souvik666" target="_blank" rel="noreferrer">Souvik</a>{" "}
       </MyFooter>
     </>
   );

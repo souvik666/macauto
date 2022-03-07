@@ -12,7 +12,9 @@ function LinkME(link) {
     <>
       {link ? (
         <Alert success="success">
-          <a href={link}>Portfolio Link</a>
+          <a href={link} target="_blank" rel="noreferrer">
+            Portfolio Link
+          </a>
         </Alert>
       ) : (
         <Alert severity="error">No Portfolio Link Found</Alert>
@@ -37,7 +39,7 @@ export default function OutlinedCard(props) {
   const { name, blog, bio, twitter_username, location, img } = props;
   return (
     <React.Fragment>
-       {/* {name  && blog && bio && twitter_username && location && img ? (
+      {/* {name  && blog && bio && twitter_username && location && img ? (
         <h1>Hi</h1>
       ) : (
         ""
@@ -74,7 +76,6 @@ export default function OutlinedCard(props) {
               {HandelMe(bio, "bio")}
               <br />
               <small>
-               
                 {/*  //{email || <Alert severity="error">No Email Found</Alert>}{" "} */}
               </small>
             </Typography>
