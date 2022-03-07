@@ -6,6 +6,8 @@ import SearchAppBar from "../components/Navbar";
 import { device } from "../Device";
 import { getPinnedRepo, percentage } from "../Helper/Helper";
 import LinearProgress from "@mui/material/LinearProgress";
+import axios from "axios";
+import OutlinedCard from "../components/Static.info";
 
 const openInNewTab = (url) => {
   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
@@ -40,6 +42,7 @@ const InfoBox = styled.div`
 `;
 export default function Main() {
   window.localStorage.clear();
+
   /* const [dvalue, setValue] = useState([]);
   const [repocount, setrepocount] = useState(); */
   const [visit, setvisit] = useState(false);
@@ -51,9 +54,46 @@ export default function Main() {
   const [flag, setflag] = useState();
   //console.log(visit)
   // const [t, sett] = useState();
+  const [userdata, setUserdata] = useState({
+    email: "",
+    portfoliourl: "",
+    twitter_username: "",
+    bio: "",
+    blog: "",
+    status: "",
+    location: "",
+    img: "",
+    name: "",
+  });
   const [red, setred] = useState();
   const [see, setsee] = useState();
   function GrabInput(value) {
+    (async function () {
+      axios.get(`https://api.github.com/users/${value}`).then((d) => {
+        let data = d.data;
+        let status = d.status;
+        if (
+          !data.email ||
+          !data.blog ||
+          !data.twitter_username ||
+          !data.bio ||
+          !data.location ||
+          !data.avatar_url
+        ) {
+          setPass(false);
+        }
+        setUserdata({
+          email: data.email,
+          portfoliourl: data.blog,
+          twitter_username: data.twitter_username,
+          bio: data.bio,
+          location: data.location,
+          img: data.avatar_url,
+          status: status,
+          name: data.name,
+        });
+      });
+    })();
     setvisit(true);
     setflag(true);
     getPinnedRepo(value)
@@ -118,6 +158,7 @@ export default function Main() {
           });
         }, 1000);
         //console.log(noReadME);
+
         return setflag(false);
       })
       .catch((e) => {
@@ -130,6 +171,7 @@ export default function Main() {
       /* let noReadme = JSON.parse(window.localStorage.getItem("ReadME")) || [];
       setNoReadME(noReadme); */
       GrabInput(value);
+
       /*  if (noReadME.length > 0) {
         console.log(percentage(repocount - noReadME.length, repocount));
         console.log(repocount, noReadME.length);
@@ -142,7 +184,8 @@ export default function Main() {
       {/* {t ? <p>Hi</p> : ""} */}
       {/*       {red ? <p>Hi</p> : <h1>Hi</h1>}{" "} */}
       <SearchAppBar GrabInput={eventme}></SearchAppBar>
-      {flag ? <LinearProgress color="secondary" /> : ""}
+      {flag ? <LinearProgress color="success" /> : ""}
+
       <br />
       <StyledDiv>
         <Charbox>
@@ -175,6 +218,19 @@ export default function Main() {
           ) : (
             ""
           )} */}
+
+          {chartdata && red ? (
+            <OutlinedCard
+              name={userdata.name}
+              bio={userdata.bio}
+              blog={userdata.portfoliourl}
+              twitter_username={userdata.twitter_username}
+              location={userdata.location}
+              img={userdata.img}
+            />
+          ) : (
+            ""
+          )}
 
           {nodesArray.length && !pass ? (
             <Alert style={{ marginTop: "3%" }} severity="warning">
