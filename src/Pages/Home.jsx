@@ -279,7 +279,7 @@ export default function Main() {
 
             {nodescriptionArray.length ? (
               <Alert style={{ marginTop: "3%" }} severity="warning">
-                Repos Which are not Descriptive
+                Repos Which are not Descriptive (min word count 70)
               </Alert>
             ) : (
               ""

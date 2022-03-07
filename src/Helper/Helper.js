@@ -22,7 +22,8 @@ function checker(str) {
   return (
     str.split(".").includes("vercel") ||
     str.split(".").includes("netlify") ||
-    str.split(".").includes("heroku")
+    str.split(".").includes("herokuapp") ||
+    str.split(".").includes("github")
   );
 }
 
