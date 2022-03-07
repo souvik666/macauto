@@ -72,7 +72,7 @@ export default function Main() {
   const [chartdata, setchartdata] = useState();
   const [nodesArray, setnodesArr] = useState([]);
   const [nodescriptionArray, setnodescriptionArray] = useState([]);
-  // const [noReadME, setNoReadME] = useState([]);
+  const [validse, setvalidse] = useState(false);
   const [pass, setPass] = useState(false);
   const [flag, setflag] = useState();
   const [infopass, setinfopass] = useState();
@@ -83,7 +83,7 @@ export default function Main() {
     twitter_username: "",
     bio: "",
     blog: "",
-    status: "",
+    status: 0,
     location: "",
     img: "",
     name: "",
@@ -92,28 +92,36 @@ export default function Main() {
   const [see, setsee] = useState();
   function GrabInput(value) {
     (async function () {
-      axios.get(`https://api.github.com/users/${value}`).then((d) => {
-        let data = d.data;
-        let status = d.status;
-        if (
-          data.blog &&
-          data.twitter_username &&
-          data.bio &&
-          data.location &&
-          data.avatar_url
-        ) {
-          setinfopass(true);
-        }
-        setUserdata({
-          portfoliourl: data.blog,
-          twitter_username: data.twitter_username,
-          bio: data.bio,
-          location: data.location,
-          img: data.avatar_url,
-          status: status,
-          name: data.name,
+      axios
+        .get(`https://api.github.com/users/${value}`)
+        .then((d) => {
+          let data = d.data;
+          let status = d.status;
+          console.log(status);
+
+          if (
+            data.blog &&
+            data.twitter_username &&
+            data.bio &&
+            data.location &&
+            data.avatar_url
+          ) {
+            setinfopass(true);
+          }
+          setUserdata({
+            portfoliourl: data.blog,
+            twitter_username: data.twitter_username,
+            bio: data.bio,
+            location: data.location,
+            img: data.avatar_url,
+            status: status,
+            name: data.name,
+          });
+        })
+        .catch((e) => {
+          console.log("User Not Found" + e);
+          setvalidse(true);
         });
-      });
     })();
     setvisit(true);
     setflag(true);
@@ -174,7 +182,7 @@ export default function Main() {
         return setflag(false);
       })
       .catch((e) => {
-        return console.log(e);
+        console.log("myerror" + e);
       });
   }
   function eventme(value) {
@@ -189,6 +197,13 @@ export default function Main() {
       <Normcont>
         <SearchAppBar GrabInput={eventme}></SearchAppBar>
         {flag ? <LinearProgress color="success" /> : ""}
+        {validse ? (
+          <Alert style={{ marginTop: "0.03%" }} severity="warning">
+            User Not Found
+          </Alert>
+        ) : (
+          ""
+        )}
 
         <br />
         <StyledDiv>
