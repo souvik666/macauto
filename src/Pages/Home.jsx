@@ -73,7 +73,7 @@ export default function Main() {
   const [nodesArray, setnodesArr] = useState([]);
   const [nodescriptionArray, setnodescriptionArray] = useState([]);
   const [validse, setvalidse] = useState(false);
-  const [pass, setPass] = useState(false);
+  const [pass, setPass] = useState();
   const [flag, setflag] = useState();
   const [infopass, setinfopass] = useState();
   //console.log(visit)
@@ -123,6 +123,7 @@ export default function Main() {
           setvalidse(true);
         });
     })();
+    setvalidse(false)
     setvisit(true);
     setflag(true);
     getPinnedRepo(value)
@@ -317,7 +318,10 @@ export default function Main() {
         </StyledDiv>
       </Normcont>
       <MyFooter>
-        Made With ❤️ By <a href="https://github.com/souvik666" target="_blank" rel="noreferrer">Souvik</a>{" "}
+        Made With ❤️ By{" "}
+        <a href="https://github.com/souvik666" target="_blank" rel="noreferrer">
+          Souvik
+        </a>{" "}
       </MyFooter>
     </>
   );
