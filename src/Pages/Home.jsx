@@ -123,7 +123,7 @@ export default function Main() {
           setvalidse(true);
         });
     })();
-    setvalidse(false)
+    setvalidse(false);
     setvisit(true);
     setflag(true);
     getPinnedRepo(value)
