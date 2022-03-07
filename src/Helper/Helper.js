@@ -80,7 +80,7 @@ const PinnedRepoWatchDog = (arr) => {
     if (description === undefined) {
       obj.NoGithubdesprition.push(link);
     } else {
-      if (description.length <= 90) {
+      if (description.length <= 70) {
         obj.NoGithubdesprition.push(link);
       }
     }
