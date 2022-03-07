@@ -252,7 +252,8 @@ export default function Main() {
 
             {nodesArray.length && !pass ? (
               <Alert style={{ marginTop: "3%" }} severity="warning">
-                Repos Which are not Deployed yet
+                Repos Which are not Deployed yet (forked repos and profile redme are not
+                considerd)
               </Alert>
             ) : (
               ""
