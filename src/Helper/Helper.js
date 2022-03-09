@@ -182,7 +182,7 @@ function helpmetoAppend(d) {
     let tmp = el.split("//");
     let protmp = tmp[1].split("/");
 
-    let div = document.createElement("span");
+    let div = document.createElement("div");
     let box = document.createElement("button");
     box.innerHTML = protmp[protmp.length - 1];
     box.style = `
@@ -195,6 +195,7 @@ function helpmetoAppend(d) {
     margin-top: 2%;
     color:  white;
     border:0px
+    
 `;
     box.addEventListener("click", () => {
       openInNewTab(el);
