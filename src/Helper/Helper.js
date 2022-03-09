@@ -182,7 +182,7 @@ function helpmetoAppend(d) {
     let tmp = el.split("//");
     let protmp = tmp[1].split("/");
 
-    let div = document.createElement("div");
+    let div = document.createElement("span");
     let box = document.createElement("button");
     box.innerHTML = protmp[protmp.length - 1];
     box.style = `

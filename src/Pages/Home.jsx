@@ -92,6 +92,7 @@ export default function Main() {
   const [see, setsee] = useState();
   function GrabInput(value) {
     (async function () {
+      setPass(false);
       axios
         .get(`https://api.github.com/users/${value}`)
         .then((d) => {
