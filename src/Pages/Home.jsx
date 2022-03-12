@@ -68,6 +68,7 @@ export default function Main() {
   const [flag, setflag] = useState();
   const [infopass, setinfopass] = useState();
   const [legint, setlegit] = useState(true);
+  const [repoin, setrepopin] = useState(true);
   const [userdata, setUserdata] = useState({
     portfoliourl: "",
     twitter_username: "",
@@ -82,6 +83,7 @@ export default function Main() {
   const [see, setsee] = useState();
   function GrabInput(value) {
     setlegit(true);
+    setrepopin(true);
     /* */ (async function () {
       axios
         .get(
@@ -188,17 +190,17 @@ export default function Main() {
             ],
           });
         }, 1000);
-
         return setflag(false);
       })
       .catch((e) => {
+        setrepopin(false);
         console.log("myerror" + e);
+        return setflag(false);
       });
   }
   function eventme(value) {
     return setTimeout(function () {
       GrabInput(value);
-      console.log(userdata);
     }, 1000);
   }
 
@@ -216,12 +218,19 @@ export default function Main() {
         )}
         {!legint ? (
           <Alert style={{ marginTop: "0.03%" }} severity="warning">
-            No Profile Readme Found For This Student 
+            No Profile Readme Found For This Student
           </Alert>
         ) : (
           ""
         )}
 
+        {!repoin ? (
+          <Alert style={{ marginTop: "0.03%" }} severity="warning">
+            No Pinned Repo Found For This Student
+          </Alert>
+        ) : (
+          ""
+        )}
         <br />
         <StyledDiv>
           <Charbox>
