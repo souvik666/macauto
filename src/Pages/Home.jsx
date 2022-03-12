@@ -33,13 +33,6 @@ const StyledDiv = styled.div`
   }
 `;
 const MyFooter = styled.footer`
-  /*   height: 60px;
-  text-align: center;
-  background-color: black;
-  color: white;
-  margin-top: 2%;
-  line-height: 4;
-   */
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -66,8 +59,6 @@ const Normcont = styled.div`
 export default function Main() {
   window.localStorage.clear();
 
-  /* const [dvalue, setValue] = useState([]);
-  const [repocount, setrepocount] = useState(); */
   const [visit, setvisit] = useState(false);
   const [chartdata, setchartdata] = useState();
   const [nodesArray, setnodesArr] = useState([]);
@@ -76,8 +67,7 @@ export default function Main() {
   const [pass, setPass] = useState();
   const [flag, setflag] = useState();
   const [infopass, setinfopass] = useState();
-  //console.log(visit)
-  // const [t, sett] = useState();
+  const [legint, setlegit] = useState(true);
   const [userdata, setUserdata] = useState({
     portfoliourl: "",
     twitter_username: "",
@@ -91,6 +81,24 @@ export default function Main() {
   const [red, setred] = useState();
   const [see, setsee] = useState();
   function GrabInput(value) {
+    /* */ (async function () {
+      axios
+        .get(
+          `https://raw.githubusercontent.com/${value}/${value}/main/README.md`
+        )
+        .then((d) => {
+          if (d) {
+            setlegit(true);
+          }
+        })
+        .catch((e) => {
+          if (e) {
+            console.log("This Guys is So lazy" + e);
+            setlegit(false);
+          }
+        });
+    })();
+
     (async function () {
       setPass(false);
       axios
@@ -98,7 +106,6 @@ export default function Main() {
         .then((d) => {
           let data = d.data;
           let status = d.status;
-          // console.log(data);
 
           if (
             data.blog &&
@@ -202,6 +209,13 @@ export default function Main() {
         {validse ? (
           <Alert style={{ marginTop: "0.03%" }} severity="warning">
             User Not Found
+          </Alert>
+        ) : (
+          ""
+        )}
+        {!legint ? (
+          <Alert style={{ marginTop: "0.03%" }} severity="warning">
+            This guy Doesn't even have a Profile Readme
           </Alert>
         ) : (
           ""

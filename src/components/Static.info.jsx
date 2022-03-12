@@ -67,7 +67,7 @@ export default function OutlinedCard(props) {
               {HandelMe(name, "Name")}
             </Typography>
             <Typography variant="h5" component="div">
-              {HandelMe(location.toUpperCase(), "location")}
+              {HandelMe(location, "location")}
             </Typography>
             <Typography sx={{ mb: 1.5, mt: 1.5 }} color="text.secondary">
               {HandelMe(twitter_username, "twitter_username")}{" "}

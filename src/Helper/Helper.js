@@ -35,7 +35,6 @@ function extractSocialMedia(text) {
 
 const PinnedRepoWatchDog = (arr) => {
   const len = arr.length;
-  //const fscty = arr.length / 100;
   window.localStorage.removeItem("ReadME");
 
   let you = [];
@@ -60,7 +59,6 @@ const PinnedRepoWatchDog = (arr) => {
       website,
     } = element;
 
-    //console.log(tmp);
     getProfileReadme(repo, owner).then((d) => {
       if (!d) {
         count++;
@@ -69,7 +67,7 @@ const PinnedRepoWatchDog = (arr) => {
     });
     you.push(Link);
 
-    //if (!getProfileReadme(repo, owner)) obj.noReadME.push(link);
+    
     if (website === undefined) {
       obj.NoDeployment.push(link);
     } else if (website) {
@@ -94,14 +92,12 @@ const PinnedRepoWatchDog = (arr) => {
   const workdoneDE = percentage(len - obj.NoDeployment.length, len) | 0;
   const DES = percentage(len - obj.NoGithubdesprition.length, len) | 0;
   const [res, res2] = [workdoneDE || 100, DES || 100];
-  //console.log(noReadme);
-  // console.log(you);
+  
   setTimeout(function () {
     window.localStorage.setItem("ReadME", JSON.stringify(obj.noReadME));
     helpmetoAppend(obj.noReadME);
   }, 1000);
-  //window.document.getElementById("noredme").innerHTML = "ji";
-  //console.log(arr.length);
+  
   return {
     d: arr,
     redmenocount: count,
@@ -139,9 +135,8 @@ export async function getPinnedRepo(user) {
   );
 
   return PinnedRepoWatchDog(response.data);
-  //   return console.log("Pinned repo Cheking Done");
+  
 }
-//getPinnedRepo();
 
 /* Profile ReadME evaluation  */
 const openInNewTab = (url) => {
@@ -176,7 +171,7 @@ export async function getUserProfileState(owner, reponame) {
 
 function helpmetoAppend(d) {
   const target = window.document.getElementById("noredme");
-  // const target2 = window.document.getElementById("msgred");
+  
   target.innerHTML = "";
   d.map((el, i) => {
     let tmp = el.split("//");
