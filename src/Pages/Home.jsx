@@ -81,6 +81,7 @@ export default function Main() {
   const [red, setred] = useState();
   const [see, setsee] = useState();
   function GrabInput(value) {
+    setlegit(true);
     /* */ (async function () {
       axios
         .get(
@@ -215,7 +216,7 @@ export default function Main() {
         )}
         {!legint ? (
           <Alert style={{ marginTop: "0.03%" }} severity="warning">
-            This guy Doesn't even have a Profile Readme
+            No Profile Readme Found For This Student 
           </Alert>
         ) : (
           ""
