@@ -67,7 +67,6 @@ const PinnedRepoWatchDog = (arr) => {
     });
     you.push(Link);
 
-    
     if (website === undefined) {
       obj.NoDeployment.push(link);
     } else if (website) {
@@ -92,12 +91,12 @@ const PinnedRepoWatchDog = (arr) => {
   const workdoneDE = percentage(len - obj.NoDeployment.length, len) | 0;
   const DES = percentage(len - obj.NoGithubdesprition.length, len) | 0;
   const [res, res2] = [workdoneDE || 100, DES || 100];
-  
+
   setTimeout(function () {
     window.localStorage.setItem("ReadME", JSON.stringify(obj.noReadME));
     helpmetoAppend(obj.noReadME);
   }, 1000);
-  
+
   return {
     d: arr,
     redmenocount: count,
@@ -122,7 +121,7 @@ async function getProfileReadme(reponame, owner) {
 
     return response.data.length > 300;
   } catch (e) {
-    if (e) console.log("trying master branch...");
+    if (e) return false;
     let responsetwo = await axios.get(
       `https://raw.githubusercontent.com/${owner}/${reponame}/master/README.md`
     );
@@ -135,7 +134,6 @@ export async function getPinnedRepo(user) {
   );
 
   return PinnedRepoWatchDog(response.data);
-  
 }
 
 /* Profile ReadME evaluation  */
@@ -171,7 +169,7 @@ export async function getUserProfileState(owner, reponame) {
 
 function helpmetoAppend(d) {
   const target = window.document.getElementById("noredme");
-  
+
   target.innerHTML = "";
   d.map((el, i) => {
     let tmp = el.split("//");
