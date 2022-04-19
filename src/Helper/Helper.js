@@ -58,13 +58,23 @@ const PinnedRepoWatchDog = (arr) => {
       forks, */
       website,
     } = element;
+    /* try {
+  
+} catch (error) {
+  
+} */
 
-    getProfileReadme(repo, owner).then((d) => {
-      if (!d) {
-        count++;
+    getProfileReadme(repo, owner)
+      .then((d) => {
+        console.log(!d ? "kk" : "jaddfas");
+        if (!d) {
+          count++;
+          obj.noReadME.push(link);
+        }
+      })
+      .catch((e) => {
         obj.noReadME.push(link);
-      }
-    });
+      });
     you.push(Link);
 
     if (website === undefined) {
@@ -121,7 +131,10 @@ async function getProfileReadme(reponame, owner) {
 
     return response.data.length > 300;
   } catch (e) {
-    if (e) return false;
+    /* if (e) {
+      localStorage.clear();
+      return false;
+    } */
     let responsetwo = await axios.get(
       `https://raw.githubusercontent.com/${owner}/${reponame}/master/README.md`
     );
